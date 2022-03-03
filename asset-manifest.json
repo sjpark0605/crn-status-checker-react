@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/crn-status-checker-react/static/css/main.4effa168.css",
+    "main.js": "/crn-status-checker-react/static/js/main.7422561b.js",
+    "static/js/787.ebcb910a.chunk.js": "/crn-status-checker-react/static/js/787.ebcb910a.chunk.js",
+    "index.html": "/crn-status-checker-react/index.html",
+    "main.4effa168.css.map": "/crn-status-checker-react/static/css/main.4effa168.css.map",
+    "main.7422561b.js.map": "/crn-status-checker-react/static/js/main.7422561b.js.map",
+    "787.ebcb910a.chunk.js.map": "/crn-status-checker-react/static/js/787.ebcb910a.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.4effa168.css",
+    "static/js/main.7422561b.js"
+  ]
+}
