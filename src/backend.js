@@ -22,7 +22,6 @@ function parseRows(rows) {
     }
 
     const result = groupOutput(data);
-    console.log(result);
 
     return result;
 }
@@ -57,7 +56,6 @@ export async function callAPIBulk(data) {
         output = output.concat(temp)
     }
 
-    console.log(output);
     createExcel(output);
 }
 
