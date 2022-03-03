@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { callAPI, parseExcel } from '../backend.js'
+import { callAPIBulk, parseExcel } from '../backend.js'
 
 function Form() {
 
@@ -9,14 +9,14 @@ function Form() {
     const onFileUpload = (e) => {
         parseExcel(e).then((EXCEL_DATA) => {
            if (EXCEL_DATA.length !== 0) {
-               setData({"b_no" : EXCEL_DATA});
+               setData({"crn_lists" : EXCEL_DATA});
                setUploaded("btn btn-primary col-1");
            } 
         });
     }
 
     const onStatusButtonClick = () => {
-        callAPI(data)
+        callAPIBulk(data["crn_lists"]);
     }
 
   return (

@@ -21,7 +21,25 @@ function parseRows(rows) {
         }
     }
 
-    return data;
+    const result = groupOutput(data);
+    console.log(result);
+
+    return result;
+}
+
+function groupOutput(data) {
+    const result = [];
+
+    const chunk = 100;
+    let i = 0;
+    let j = 0;
+
+    for (i = 0, j = data.length; i < j; i += chunk) {
+        let temp = data.slice(i, i+chunk);
+        result.push(temp);
+    }
+
+    return result;
 }
 
 function constructURL() {    
@@ -31,25 +49,36 @@ function constructURL() {
     return url + key
 }
 
-export function callAPI(data) {
+export async function callAPIBulk(data) {
+    let output = [["사업자등록번호", "납세자상태", "과세유형"]]
+
+    for await (const datum of data) {
+        const temp = await callAPI(datum);
+        output = output.concat(temp)
+    }
+
+    console.log(output);
+    createExcel(output);
+}
+
+async function callAPI(data) {
     const url = constructURL()
 
-    fetch(url, 
+    return await fetch(url, 
         {
             "method": "POST",
             "headers": {
               "content-type": "application/json",
               "accept": "application/json"
             },
-            "body": JSON.stringify(data)
+            "body": JSON.stringify({"b_no": data})
         })
         .then(response => response.json())
-        .then(json => parse(json))
-        .then((parsedOutput) => createExcel(parsedOutput));
+        .then(json => parse(json));
 }
 
 function parse(json) {
-    const output = [["사업자등록번호", "납세자상태", "과세유형"]];
+    const output = []
 
     for (let i = 0;  i < json["data"].length; i++) {
         const crn = json["data"][i]["b_no"]
