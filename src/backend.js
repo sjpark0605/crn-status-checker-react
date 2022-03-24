@@ -16,8 +16,14 @@ function parseRows(rows) {
     const data = [];
 
     for (let i = 0; i < rows.length; i++) {
-        if (!isNaN(rows[i][0])) {
-            data.push(rows[i][0].toString());
+        if (rows[i][0] !== null && rows[i][0] !== "") {
+            let crn = rows[i][0].toString()
+            crn = crn.replaceAll('-', '')
+
+            if (!isNaN(crn)) {
+                data.push(crn)
+            }
+
         }
     }
 
