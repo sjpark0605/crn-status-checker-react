@@ -55,7 +55,7 @@ function constructURL() {
 }
 
 export async function callAPIBulk(data) {
-    let output = [["사업자등록번호", "납세자상태", "과세유형"]]
+    let output = [["사업자등록번호", "납세자상태", "과세유형", "폐업일"]]
 
     for await (const datum of data) {
         const temp = await callAPI(datum);
@@ -81,6 +81,14 @@ async function callAPI(data) {
         .then(json => parse(json));
 }
 
+function formatDate(date) {
+    const yyyy = date.substring(0, 4)
+    const mm = date.substring(4, 6)
+    const dd = date.substring(6, 8)
+
+    return yyyy + "-" + mm + "-" + dd
+}
+
 function parse(json) {
     const output = []
 
@@ -88,8 +96,9 @@ function parse(json) {
         const crn = json["data"][i]["b_no"]
         const status = json["data"][i]["b_stt"] === "" ? "-" : json["data"][i]["b_stt"]
         const type = json["data"][i]["tax_type"] === "국세청에 등록되지 않은 사업자등록번호입니다." ? "국세청에 등록되지 않음" : json["data"][i]["tax_type"]
+        const endDate = json["data"][i]["end_dt"] === "" ? "-" : formatDate(json["data"][i]["end_dt"])
 
-        output.push([crn, status, type]);
+        output.push([crn, status, type, endDate]);
     }
 
     return output;
